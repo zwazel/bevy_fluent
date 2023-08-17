@@ -71,6 +71,10 @@ impl BundleAsset {
     pub fn resource_handles(&self) -> &Vec<Handle<ResourceAsset>> {
         &self.resource_handles
     }
+
+    pub fn resource_handles_mut(&mut self) -> &mut Vec<Handle<ResourceAsset>> {
+        &mut self.resource_handles
+    }
 }
 
 impl Deref for BundleAsset {
