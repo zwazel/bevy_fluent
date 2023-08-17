@@ -17,7 +17,7 @@ use unic_langid::LanguageIdentifier;
 use crate::{assets::resource, ResourceAsset};
 
 #[instrument(fields(path = %load_context.path().display()), ret, skip_all)]
-pub async fn load(data: Data, load_context: &mut LoadContext<'_>) -> Result<()> {
+async fn load(data: Data, load_context: &mut LoadContext<'_>) -> Result<()> {
     let mut bundle = FluentBundle::new_concurrent(vec![data.locale.clone()]);
     let mut asset_paths = Vec::new();
     let parent = load_context.path().parent();
@@ -106,6 +106,6 @@ impl AssetLoader for BundleAssetLoader {
 #[serde(deny_unknown_fields)]
 #[uuid = "4f636d83-f105-497a-b5eb-428a88d60ff2"]
 pub struct Data {
-    pub locale: LanguageIdentifier,
-    pub resources: Vec<PathBuf>,
+    locale: LanguageIdentifier,
+    resources: Vec<PathBuf>,
 }

@@ -4,7 +4,7 @@
 
 #[doc(inline)]
 pub use self::{
-    assets::{load, BundleAsset, Data, ResourceAsset},
+    assets::{BundleAsset, Data, ResourceAsset},
     exts::bevy::AssetServerExt,
     plugins::FluentPlugin,
     resources::{Locale, Localization},
@@ -15,8 +15,7 @@ pub use self::{
 pub mod prelude {
     #[doc(inline)]
     pub use super::{
-        load, AssetServerExt, BundleAsset, Data, FluentPlugin, Locale, Localization,
-        LocalizationBuilder,
+        AssetServerExt, BundleAsset, Data, FluentPlugin, Locale, Localization, LocalizationBuilder,
     };
 }
 
