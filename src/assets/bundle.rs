@@ -11,7 +11,7 @@ use bevy::{
 };
 use fluent::{bundle::FluentBundle, FluentResource};
 use intl_memoizer::concurrent::IntlLangMemoizer;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use unic_langid::LanguageIdentifier;
 
 use crate::{assets::resource, ResourceAsset};
@@ -102,7 +102,7 @@ impl AssetLoader for BundleAssetLoader {
 }
 
 /// Data
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize)]
 #[serde(deny_unknown_fields)]
 pub struct Data {
     locale: LanguageIdentifier,
