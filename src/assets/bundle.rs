@@ -109,3 +109,12 @@ pub struct Data {
     locale: LanguageIdentifier,
     resources: Vec<PathBuf>,
 }
+
+impl Data {
+    pub fn locale(&self) -> &LanguageIdentifier {
+        &self.locale
+    }
+    pub fn resources(&self) -> &Vec<PathBuf> {
+        &self.resources
+    }
+}
