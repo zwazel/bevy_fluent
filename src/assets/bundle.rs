@@ -64,6 +64,15 @@ pub struct BundleAsset {
     pub(crate) resource_handles: Vec<Handle<ResourceAsset>>,
 }
 
+impl BundleAsset {
+    pub fn bundle(&self) -> &Arc<FluentBundle<Arc<FluentResource>, IntlLangMemoizer>> {
+        &self.bundle
+    }
+    pub fn resource_handles(&self) -> &Vec<Handle<ResourceAsset>> {
+        &self.resource_handles
+    }
+}
+
 impl Deref for BundleAsset {
     type Target = FluentBundle<Arc<FluentResource>, IntlLangMemoizer>;
 
