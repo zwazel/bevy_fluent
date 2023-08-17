@@ -5,7 +5,7 @@
 use crate::{
     assets::{bundle::BundleAssetLoader, resource::ResourceAssetLoader},
     systems::update_bundle_asset,
-    BundleAsset, ResourceAsset,
+    BundleAsset, Data, ResourceAsset,
 };
 use bevy::prelude::*;
 
@@ -18,6 +18,7 @@ impl Plugin for FluentPlugin {
         app.add_asset::<ResourceAsset>()
             .init_asset_loader::<ResourceAssetLoader>()
             .add_asset::<BundleAsset>()
+            .add_asset::<Data>()
             .init_asset_loader::<BundleAssetLoader>()
             .add_systems(PreUpdate, update_bundle_asset);
     }
