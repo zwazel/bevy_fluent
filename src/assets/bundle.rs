@@ -1,21 +1,20 @@
 //! Bundle asset
 
-use crate::{assets::resource, ResourceAsset};
+use std::{ops::Deref, path::PathBuf, str, sync::Arc};
+
 use anyhow::Result;
 use bevy::{
     asset::{AssetLoader, AssetPath, LoadContext, LoadedAsset},
     prelude::*,
     reflect::{TypePath, TypeUuid},
-    utils::{
-        tracing::{self, instrument},
-        BoxedFuture,
-    },
+    utils::{tracing::instrument, BoxedFuture},
 };
 use fluent::{bundle::FluentBundle, FluentResource};
 use intl_memoizer::concurrent::IntlLangMemoizer;
 use serde::Deserialize;
-use std::{ops::Deref, path::PathBuf, str, sync::Arc};
 use unic_langid::LanguageIdentifier;
+
+use crate::{assets::resource, ResourceAsset};
 
 #[instrument(fields(path = %load_context.path().display()), ret, skip_all)]
 async fn load(data: Data, load_context: &mut LoadContext<'_>) -> Result<()> {
@@ -105,7 +104,7 @@ impl AssetLoader for BundleAssetLoader {
 /// Data
 #[derive(Debug, Deserialize)]
 #[serde(deny_unknown_fields)]
-struct Data {
+pub struct Data {
     locale: LanguageIdentifier,
     resources: Vec<PathBuf>,
 }
