@@ -1,17 +1,15 @@
 //! Resource asset
 
+use std::{ops::Deref, str, sync::Arc};
+
 use anyhow::Result;
 use bevy::{
     asset::{AssetLoader, LoadContext, LoadedAsset},
     prelude::*,
     reflect::{TypePath, TypeUuid},
-    utils::{
-        tracing::{self, instrument},
-        BoxedFuture,
-    },
+    utils::{tracing::instrument, BoxedFuture},
 };
 use fluent::FluentResource;
-use std::{ops::Deref, str, sync::Arc};
 
 #[instrument(skip_all)]
 pub(crate) fn deserialize(bytes: &[u8]) -> Result<Arc<FluentResource>> {
@@ -39,6 +37,12 @@ fn load(data: Arc<FluentResource>, load_context: &mut LoadContext<'_>) {
 #[derive(Clone, Debug, TypePath, TypeUuid)]
 #[uuid = "0b2367cb-fb4a-4746-a305-df98b26dddf6"]
 pub struct ResourceAsset(pub(crate) Arc<FluentResource>);
+
+impl ResourceAsset {
+    pub fn resource(&self) -> &FluentResource {
+        &self.0
+    }
+}
 
 impl Deref for ResourceAsset {
     type Target = FluentResource;
