@@ -39,8 +39,8 @@ fn load(data: Arc<FluentResource>, load_context: &mut LoadContext<'_>) {
 pub struct ResourceAsset(pub(crate) Arc<FluentResource>);
 
 impl ResourceAsset {
-    pub fn resource(&self) -> &FluentResource {
-        &self.0
+    pub fn resource(&self) -> Arc<FluentResource> {
+        self.0.clone()
     }
 }
 
