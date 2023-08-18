@@ -6,7 +6,7 @@
 use crate::{BundleAsset, ResourceAsset};
 use bevy::prelude::{warn, AssetEvent, Assets, EventReader, Handle, Res, ResMut};
 use fluent::bundle::FluentBundle;
-use std::sync::Arc;
+use std::sync::{Arc, RwLock};
 
 /// Re-loads bundle assets when the resources they depend on changes.
 pub(crate) fn update_bundle_asset(
@@ -34,7 +34,8 @@ pub(crate) fn update_bundle_asset(
                 let bundle = bundle_assets.get_mut(&handle).unwrap();
 
                 // Create a new bundle to replace it
-                let mut new_bundle = FluentBundle::new_concurrent(bundle.locales.clone());
+                let mut new_bundle =
+                    FluentBundle::new_concurrent(bundle.read().unwrap().locales.clone());
 
                 // Add all resources from the old bundle to the new bundle
                 for resource_handle in &bundle.resource_handles {
@@ -51,7 +52,7 @@ pub(crate) fn update_bundle_asset(
                 }
 
                 // Update the old bundle
-                bundle.bundle = Arc::new(new_bundle);
+                bundle.bundle = Arc::new(RwLock::new(new_bundle));
             }
         }
     }

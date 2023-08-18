@@ -23,10 +23,13 @@ impl LocalizationBuilder<'_> {
             .into_iter()
             .map(|handle| {
                 let asset = self.assets.get(handle).unwrap();
-                (asset.locale(), Entry { handle, asset })
+                (
+                    asset.read().unwrap().locale().clone(),
+                    Entry { handle, asset },
+                )
             })
             .collect();
-        let locales = self.locale.fallback_chain(locale_entries.keys().cloned());
+        let locales = self.locale.fallback_chain(locale_entries.keys());
         let mut localization = Localization::new();
         for locale in locales {
             localization.insert(locale_entries[locale].handle, locale_entries[locale].asset);

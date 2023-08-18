@@ -31,10 +31,6 @@ impl Localization {
     pub fn insert(&mut self, handle: &Handle<BundleAsset>, asset: &BundleAsset) {
         self.0.insert(handle.clone(), asset.clone());
     }
-
-    pub fn locales(&self) -> impl Iterator<Item = &LanguageIdentifier> {
-        self.0.values().map(|bundle| bundle.locale())
-    }
 }
 
 impl<'a, T, U> Content<'a, T, U> for Localization
@@ -45,6 +41,7 @@ where
     #[instrument(fields(request = % request.into()), skip_all)]
     fn content(&self, request: T) -> Option<String> {
         self.0.values().find_map(|bundle| {
+            let bundle = bundle.read().unwrap();
             let content = bundle.content(request);
             trace!(locale = %bundle.locale(), ?content);
             content
@@ -54,8 +51,6 @@ where
 
 impl Debug for Localization {
     fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        f.debug_tuple("Localization")
-            .field(&self.locales().collect::<Vec<_>>())
-            .finish()
+        f.debug_tuple("Localization").finish()
     }
 }

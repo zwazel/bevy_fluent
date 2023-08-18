@@ -1,5 +1,6 @@
 //! Bundle asset
 
+use std::sync::RwLock;
 use std::{ops::Deref, path::PathBuf, str, sync::Arc};
 
 use anyhow::Result;
@@ -45,7 +46,7 @@ async fn load(data: Data, load_context: &mut LoadContext<'_>) -> Result<()> {
         .collect::<Vec<_>>();
     load_context.set_default_asset(
         LoadedAsset::new(BundleAsset {
-            bundle: Arc::new(bundle),
+            bundle: Arc::new(RwLock::new(bundle)),
             resource_handles,
         })
         .with_dependencies(asset_paths),
@@ -59,13 +60,13 @@ async fn load(data: Data, load_context: &mut LoadContext<'_>) -> Result<()> {
 #[derive(Clone, TypePath, TypeUuid)]
 #[uuid = "929113bb-9187-44c3-87be-6027fc3b7ac5"]
 pub struct BundleAsset {
-    pub(crate) bundle: Arc<FluentBundle<Arc<FluentResource>, IntlLangMemoizer>>,
+    pub(crate) bundle: Arc<RwLock<FluentBundle<Arc<FluentResource>, IntlLangMemoizer>>>,
     /// The resource handles that this bundle depends on
     pub(crate) resource_handles: Vec<Handle<ResourceAsset>>,
 }
 
 impl BundleAsset {
-    pub fn bundle(&self) -> &Arc<FluentBundle<Arc<FluentResource>, IntlLangMemoizer>> {
+    pub fn bundle(&self) -> &Arc<RwLock<FluentBundle<Arc<FluentResource>, IntlLangMemoizer>>> {
         &self.bundle
     }
     pub fn resource_handles(&self) -> &Vec<Handle<ResourceAsset>> {
@@ -78,7 +79,7 @@ impl BundleAsset {
 }
 
 impl Deref for BundleAsset {
-    type Target = FluentBundle<Arc<FluentResource>, IntlLangMemoizer>;
+    type Target = RwLock<FluentBundle<Arc<FluentResource>, IntlLangMemoizer>>;
 
     fn deref(&self) -> &Self::Target {
         &self.bundle
