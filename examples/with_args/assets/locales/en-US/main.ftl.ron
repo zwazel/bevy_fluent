@@ -1,7 +1,0 @@
-(
-    locale: "en-US",
-    resources: [
-        "apples.ftl",
-        "hello-world.ftl",
-    ]
-)
