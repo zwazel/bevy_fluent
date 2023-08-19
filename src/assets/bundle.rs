@@ -131,4 +131,7 @@ impl Data {
     pub fn resources(&self) -> &Vec<PathBuf> {
         &self.resources
     }
+    pub fn resources_mut(&mut self) -> &mut Vec<PathBuf> {
+        &mut self.resources
+    }
 }
