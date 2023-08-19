@@ -6,10 +6,9 @@ use std::{
 };
 
 use bevy::{prelude::*, utils::tracing::instrument};
-use fluent::{FluentArgs, FluentError};
+use fluent::FluentArgs;
 use fluent_content::{Content, Request};
 use indexmap::IndexMap;
-use unic_langid::LanguageIdentifier;
 
 use crate::{exts::fluent::BundleExt, BundleAsset};
 

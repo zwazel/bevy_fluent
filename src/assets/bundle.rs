@@ -116,7 +116,7 @@ impl AssetLoader for BundleAssetLoader {
 }
 
 /// Data
-#[derive(Debug, Deserialize, Serialize, TypeUuid, TypePath)]
+#[derive(Debug, Deserialize, Serialize, TypeUuid, TypePath, Clone)]
 #[serde(deny_unknown_fields)]
 #[uuid = "4f636d83-f105-497a-b5eb-428a88d60ff2"]
 pub struct Data {
