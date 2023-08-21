@@ -66,6 +66,16 @@ pub struct BundleAsset {
 }
 
 impl BundleAsset {
+    pub fn new(
+        bundle: FluentBundle<Arc<FluentResource>, IntlLangMemoizer>,
+        resource_handles: Vec<Handle<ResourceAsset>>,
+    ) -> Self {
+        Self {
+            bundle: Arc::new(RwLock::new(bundle)),
+            resource_handles,
+        }
+    }
+
     pub fn bundle(&self) -> &Arc<RwLock<FluentBundle<Arc<FluentResource>, IntlLangMemoizer>>> {
         &self.bundle
     }
